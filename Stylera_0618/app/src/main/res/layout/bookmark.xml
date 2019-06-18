@@ -1,9 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:textSize="30dp"
         android:text="bookmark"/>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:stretchColumns="2">
+        <TableRow>
+            <View android:layout_height="60dp"
+                android:layout_width="60dp"
+                android:background="#00ff00"/>
+            <View android:layout_height="match_parent"
+                android:layout_width="30dp"/>
+            <TextView android:text="테스트1상품 어쩌구 설명 어쩌구\nsite aaa\n정보 어쩌구"/>
+            <Button android:layout_gravity="center" android:text="삭제"/>
+        </TableRow>
+        <View android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="#000000"/>
+        <TableRow>
+            <View android:layout_height="60dp"
+                android:layout_width="60dp"
+                android:background="#0000ff"/>
+            <View android:layout_height="match_parent"
+                android:layout_width="30dp"/>
+            <TextView android:text="테스트2상품 어쩌구 설명 어쩌구\nsite aaa\n정보 어쩌구"/>
+            <Button android:layout_gravity="center" android:text="삭제"/>
+        </TableRow>
+        <View android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="#000000"/>
+        <TableRow>
+            <View android:layout_height="60dp"
+                android:layout_width="60dp"
+                android:background="#ff0000"/>
+            <View android:layout_height="match_parent"
+                android:layout_width="30dp"/>
+            <TextView android:text="테스트3상품 어쩌구 설명 어쩌구\nsite aaa\n정보 어쩌구"/>
+            <Button android:layout_gravity="center" android:text="삭제"/>
+        </TableRow>
+        <View android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="#000000"/>
+        <TableRow>
+            <View android:layout_height="60dp"
+                android:layout_width="60dp"
+                android:background="#ffff00"/>
+            <View android:layout_height="match_parent"
+                android:layout_width="30dp"/>
+            <TextView android:text="테스트4상품 어쩌구 설명 어쩌구\nsite aaa\n정보 어쩌구"/>
+            <Button android:layout_gravity="center" android:text="삭제"/>
+        </TableRow>
+        <View android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="#000000"/>
+        <TableRow>
+            <View android:layout_height="60dp"
+                android:layout_width="60dp"
+                android:background="#00ffff"/>
+            <View android:layout_height="match_parent"
+                android:layout_width="30dp"/>
+            <TextView android:text="테스트5상품 어쩌구 설명 어쩌구\nsite aaa\n정보 어쩌구"/>
+            <Button android:layout_gravity="center" android:text="삭제"/>
+        </TableRow>
+        <View android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="#000000"/>
+        <TableRow>
+            <View android:layout_height="60dp"
+                android:layout_width="60dp"
+                android:background="#ff00ff"/>
+            <View android:layout_height="match_parent"
+                android:layout_width="30dp"/>
+            <TextView android:text="테스트6상품 어쩌구 설명 어쩌구\nsite aaa\n정보 어쩌구"/>
+            <Button android:layout_gravity="center" android:text="삭제"/>
+        </TableRow>
+        <View android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="#000000"/>
+        <TableRow>
+            <View android:layout_height="60dp"
+                android:layout_width="60dp"
+                android:background="#ff00ff"/>
+            <View android:layout_height="match_parent"
+                android:layout_width="30dp"/>
+            <TextView android:text="테스트6상품 어쩌구 설명 어쩌구\nsite aaa\n정보 어쩌구"/>
+            <Button android:layout_gravity="center" android:text="삭제"/>
+        </TableRow>
+        <View android:layout_height="1dp"
+            android:layout_width="match_parent"
+            android:background="#000000"/>
+    </TableLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"></ListView>
 </LinearLayout>
