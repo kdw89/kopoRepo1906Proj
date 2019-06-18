@@ -42,36 +42,11 @@ public class LoginActivity extends Activity {
         loginProcess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText idEdit, passEdit;
-                String idStr, passStr;
-                idEdit = (EditText)findViewById(R.id.username);
-                passEdit = (EditText)findViewById(R.id.password);
-
-
-                idStr = idEdit.getText().toString();
-                passStr = passEdit.getText().toString();
-
-                gPHP = new GettingPHP();
 
                 textViewJudge = (TextView)findViewById(R.id.judgeTextView);
-
+                gPHP = new GettingPHP();
                 gPHP.execute(url);
 
-                for(AccountList user : userList) {
-                    if(idStr.equals(user.getAccountId()) && passStr.equals(user.getAccountPw())) idCheck = true;
-                }
-                if(idCheck == true){
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.putExtra("inputId", idStr);
-                    intent.putExtra("inputPassword", passStr);
-                    idCheck = false;
-                    Toast.makeText(getApplicationContext(), "로그인 성공",
-                            Toast.LENGTH_SHORT).show();
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(getApplicationContext(), "ID 또는 비밀번호를 확인하세요.",
-                            Toast.LENGTH_SHORT).show();
-                }
             }
         });
     }
@@ -120,6 +95,28 @@ public class LoginActivity extends Activity {
                 for (int i = 0; i < results.length(); ++i) {
                     JSONObject temp = results.getJSONObject(i);
                     userList.add(new AccountList(temp.get("id").toString(), temp.get("pwd").toString()));
+                }
+                EditText idEdit, passEdit;
+                String idStr, passStr;
+                idEdit = (EditText)findViewById(R.id.username);
+                passEdit = (EditText)findViewById(R.id.password);
+
+                idStr = idEdit.getText().toString();
+                passStr = passEdit.getText().toString();
+                for(AccountList user : userList) {
+                    if(idStr.equals(user.getAccountId()) && passStr.equals(user.getAccountPw())) idCheck = true;
+                }
+                if(idCheck == true){
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("inputId", idStr);
+                    intent.putExtra("inputPassword", passStr);
+                    idCheck = false;
+                    Toast.makeText(getApplicationContext(), "로그인 성공",
+                            Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "ID 또는 비밀번호를 확인하세요.",
+                            Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

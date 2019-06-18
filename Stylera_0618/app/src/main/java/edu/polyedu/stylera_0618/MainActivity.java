@@ -6,27 +6,42 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.MenuItem;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView mTextMessage;
+
+    private FragmentManager fragmentManager = getSupportFragmentManager();
+    private SearchFragment searchFragment = new SearchFragment();
+    private BookmarkFragment bookmarkFragment = new BookmarkFragment();
+    private ChartFragment chartFragment = new ChartFragment();
+    private PromotionFragment promotionFragment = new PromotionFragment();
+    private SettingFragment settingFragment = new SettingFragment();
+    FragmentTransaction transaction = fragmentManager.beginTransaction();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    transaction.replace(R.id.frame_layout, searchFragment).commitAllowingStateLoss();
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                case R.id.navigation_bookmark:
+                    transaction.replace(R.id.frame_layout, bookmarkFragment).commitAllowingStateLoss();
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                case R.id.navigation_chart:
+                    transaction.replace(R.id.frame_layout, chartFragment).commitAllowingStateLoss();
+                    return true;
+                case R.id.navigation_promotion:
+                    transaction.replace(R.id.frame_layout, promotionFragment).commitAllowingStateLoss();
+                    return true;
+                case R.id.navigation_settings:
+                    transaction.replace(R.id.frame_layout, settingFragment).commitAllowingStateLoss();
                     return true;
             }
             return false;
@@ -36,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_main);
+        setContentView(R.layout.stylera_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        mTextMessage = findViewById(R.id.message);
+        transaction.replace(R.id.frame_layout, searchFragment).commitAllowingStateLoss();
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
