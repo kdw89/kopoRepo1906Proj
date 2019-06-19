@@ -106,6 +106,7 @@
                     android:text="아직 계정이 없으세요?" />
 
                 <TextView
+                    android:id="@+id/signUpProcess"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

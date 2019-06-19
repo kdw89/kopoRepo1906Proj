@@ -49,6 +49,15 @@ public class LoginActivity extends Activity {
 
             }
         });
+
+        TextView signUp = (TextView)findViewById(R.id.signUpProcess);
+        signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
