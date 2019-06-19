@@ -9,7 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
 public class MainActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager = getSupportFragmentManager();
@@ -19,6 +24,20 @@ public class MainActivity extends AppCompatActivity {
     private PromotionFragment promotionFragment = new PromotionFragment();
     private SettingFragment settingFragment = new SettingFragment();
     FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        switch(keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                BottomNavigationView navView = findViewById(R.id.nav_view);
+                transaction.replace(R.id.frame_layout, searchFragment).commitAllowingStateLoss();
+                navView.setSelectedItemId(R.id.navigation_home);
+                break;
+        }
+        return false;
+    }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -52,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.stylera_main);
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+       BottomNavigationView navView = findViewById(R.id.nav_view);
 
         transaction.replace(R.id.frame_layout, searchFragment).commitAllowingStateLoss();
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

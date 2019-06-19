@@ -18,7 +18,8 @@
                 android:layout_marginLeft="10dp"
                 android:src="@drawable/search" />
 
-            <EditText android:hint="검색어를 입력하세요." />
+            <EditText android:id="@+id/searchItem"
+                android:hint="검색어를 입력하세요." />
 
             <View
                 android:layout_width="10dp"
@@ -26,11 +27,17 @@
         </TableRow>
 
     </TableLayout>
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="8"
+    android:fillViewport="true">
     <ListView
         android:id="@+id/listview1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="8"
         android:textFilterEnabled="true" />
+
+</ScrollView>
+
 </LinearLayout>

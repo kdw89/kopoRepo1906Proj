@@ -108,6 +108,8 @@ public class LoginActivity extends Activity {
                 }
                 if(idCheck == true){
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    idEdit.setText("");
+                    passEdit.setText("");
                     intent.putExtra("inputId", idStr);
                     intent.putExtra("inputPassword", passStr);
                     idCheck = false;
