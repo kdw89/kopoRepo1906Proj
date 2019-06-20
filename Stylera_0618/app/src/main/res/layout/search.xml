@@ -6,8 +6,7 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:background="@drawable/pwblank"
         android:gravity="center_vertical"
         android:stretchColumns="1">
@@ -18,7 +17,8 @@
                 android:layout_marginLeft="10dp"
                 android:src="@drawable/search" />
 
-            <EditText android:id="@+id/searchItem"
+            <EditText
+                android:id="@+id/searchItem"
                 android:hint="검색어를 입력하세요." />
 
             <View
@@ -27,17 +27,14 @@
         </TableRow>
 
     </TableLayout>
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="8"
-    android:fillViewport="true">
+
     <ListView
         android:id="@+id/listview1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:textFilterEnabled="true" />
-
-</ScrollView>
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/heroes"/>
 </LinearLayout>

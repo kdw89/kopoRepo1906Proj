@@ -5,20 +5,44 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchFragment extends Fragment {
 
     private ListView listview;
     private ListViewAdapter adapter;
+
+    String url = "http://192.168.23.110/test/item.php";
+    // 데이터를 보기위한 TextView
+    TextView textViewJudge;
+    // PHP를 읽어올때 사용할 변수
+    public GettingItemPHP gPHP;
+    boolean idCheck = false;
+    List<ListViewItem> itemList = new ArrayList<ListViewItem>();
 
     @Nullable
     @Override
@@ -32,36 +56,15 @@ public class SearchFragment extends Fragment {
         //어뎁터 할당
         listview.setAdapter(adapter);
 
-        EditText searchText = (EditText) layout.findViewById(R.id.searchItem);
-
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_collections_black_24dp),
-                "Sam Smith", "I'm not the only one.\r\nStay with me.\r\n") ;
-
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_dashboard_black_24dp),
-                "Bryan Adams", "heaven.\r\nI do it for you.") ;
-
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_multiline_chart_black_24dp),
-                "Eric Clapton", "Tears in heaven.\r\nChange the world.") ;
-
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_home_black_24dp),
-                "Gary Moore", "Still got the blues.\r\nOne day.") ;
-
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_business_center_black_24dp),
-                "Helloween", "A tale that wasn't right.\r\nI want out.") ;
-
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_notifications_off_black_24dp),
-                "Adele", "Hello.\r\nSomeone like you.") ;
-
-        adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.floral),
-                "lsj", "whaaaa.\r\nSomeone like you.") ;
-
+        gPHP = new GettingItemPHP();
+        gPHP.execute(url);
 
         EditText editTextFilter = (EditText)layout.findViewById(R.id.searchItem) ;
         editTextFilter.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable edit) {
-                String filterText = edit.toString() ;
-                ((ListViewAdapter)listview.getAdapter()).getFilter().filter(filterText) ;
+                String filterText = edit.toString();
+                ((ListViewAdapter)listview.getAdapter()).getFilter().filter(filterText);
             }
 
             @Override
@@ -77,4 +80,56 @@ public class SearchFragment extends Fragment {
 
     }
 
+    class GettingItemPHP extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected String doInBackground(String... url) {
+            StringBuilder jsonHtml = new StringBuilder();
+            try {
+                URL phpUrl = new URL(url[0]);
+                HttpURLConnection conn = (HttpURLConnection) phpUrl.openConnection();
+
+                if (conn != null) {
+                    conn.setConnectTimeout(10000);
+                    conn.setUseCaches(false);
+
+                    if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                        while (true) {
+                            String line = br.readLine();
+                            if (line == null)
+                                break;
+                            jsonHtml.append(line + "\n");
+                        }
+                        br.close();
+                    }
+                    conn.disconnect();
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return jsonHtml.toString();
+        }
+
+        protected void onPostExecute(String str) {
+            try {
+                // PHP에서 받아온 JSON 데이터를 JSON오브젝트로 변환
+                JSONObject jObject = new JSONObject(str);
+                // results라는 key는 JSON배열로 되어있다.
+                JSONArray results = jObject.getJSONArray("results");
+
+                for (int i = 0; i < results.length(); ++i) {
+                    JSONObject temp = results.getJSONObject(i);
+                    adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_home_black_24dp), temp.get("itemname").toString(), temp.get("price").toString());
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Log.d("AAAAAAAAAAAAAAAAAAA", e.toString());
+                textViewJudge.setText("Error 발생 - 관리자에게 문의하세요.");
+            }
+        }
+    }
 }

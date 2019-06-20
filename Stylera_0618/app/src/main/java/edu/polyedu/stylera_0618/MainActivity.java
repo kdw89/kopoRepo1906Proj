@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private PromotionFragment promotionFragment = new PromotionFragment();
     private SettingFragment settingFragment = new SettingFragment();
     FragmentTransaction transaction = fragmentManager.beginTransaction();
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
