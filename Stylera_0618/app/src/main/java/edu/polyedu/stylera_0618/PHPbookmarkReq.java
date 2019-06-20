@@ -27,9 +27,9 @@ public class PHPbookmarkReq {
         reader.close();
         return jsonHtml.toString();
     }
-    public String PhPtest(final String data1, final String data2) {
+    public String PhPtest(final String data1, final String data2, final String data3) {
         try {
-            String postData = "itemname=" + data1 + "&" + "price=" + data2;
+            String postData = "image=" + data1 + "&" + "itemname=" + data2 + "&" + "price=" + data3;
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestMethod("POST");

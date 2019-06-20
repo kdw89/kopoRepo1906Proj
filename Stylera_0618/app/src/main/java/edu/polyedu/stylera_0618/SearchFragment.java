@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -27,21 +28,23 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchFragment extends Fragment {
 
     private ListView listview;
     private ListViewAdapter adapter;
-
     String url = "http://192.168.23.110/test/item.php";
     // PHP를 읽어올때 사용할 변수
     public GettingItemPHP gPHP;
 
+    public static List<String> imageName = new ArrayList<>();
+    public static int productId = 0;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.search, container, false);
-
         //변수 초기화
         adapter = new ListViewAdapter();
         listview = (ListView) layout.findViewById(R.id.listview1);
@@ -107,16 +110,21 @@ public class SearchFragment extends Fragment {
         }
 
         protected void onPostExecute(String str) {
+            imageName.clear();
             try {
                 // PHP에서 받아온 JSON 데이터를 JSON오브젝트로 변환
                 JSONObject jObject = new JSONObject(str);
                 // results라는 key는 JSON배열로 되어있다.
                 JSONArray results = jObject.getJSONArray("results");
-
                 for (int i = 0; i < results.length(); ++i) {
                     JSONObject temp = results.getJSONObject(i);
-                    adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_home_black_24dp), temp.get("itemname").toString(), temp.get("price").toString());
+                    String name = temp.get("image").toString();
+                    imageName.add(name);
+                    int imagId = getResources().getIdentifier(temp.get("image").toString(),"drawable", getActivity().getPackageName());
+                    adapter.addItem(ContextCompat.getDrawable(getContext(), imagId), temp.get("itemname").toString(), temp.get("price").toString());
                 }
+
+                adapter.notifyDataSetChanged();
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -124,4 +132,5 @@ public class SearchFragment extends Fragment {
             }
         }
     }
+
 }

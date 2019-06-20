@@ -1,7 +1,10 @@
 package edu.polyedu.stylera_0618;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +15,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.List;
+
 
 
 public class ListViewAdapter extends BaseAdapter implements Filterable {
@@ -21,12 +27,10 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
     private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
     // 필터링된 결과 데이터를 저장하기 위한 ArrayList. 최초에는 전체 리스트 보유.
     private ArrayList<ListViewItem> filteredItemList = listViewItemList ;
-
     Filter listFilter ;
 
     // ListViewAdapter의 생성자
     public ListViewAdapter() {
-
     }
 
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
@@ -46,7 +50,6 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.custom_listview, parent, false);
         }
-
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
         ImageView iconImageView = (ImageView) convertView.findViewById(R.id.imageView1) ;
         TextView titleTextView = (TextView) convertView.findViewById(R.id.textView1) ;
@@ -65,16 +68,16 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 try {
                     PHPbookmarkReq request = new PHPbookmarkReq("http://192.168.56.101/test/bookmark_insert.php");
-                    request.PhPtest(String.valueOf(filteredItemList.get(pos).getTitle()),String.valueOf(filteredItemList.get(pos).getDesc()));
+                    request.PhPtest(SearchFragment.imageName.get(pos), String.valueOf(filteredItemList.get(pos).getTitle()),String.valueOf(filteredItemList.get(pos).getDesc()));
                     Toast.makeText(context, (filteredItemList.get(pos).getTitle()) + " 상품이 북마크에 등록되었습니다.", Toast.LENGTH_SHORT).show();
                 }catch (MalformedURLException e){
                     e.printStackTrace();
                 }
             }
         });
-
         return convertView;
     }
 
@@ -99,6 +102,7 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
         item.setDesc(desc);
 
         listViewItemList.add(item);
+
     }
 
     @Override
@@ -114,18 +118,16 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults() ;
-
             if (constraint == null || constraint.length() == 0) {
                 results.values = listViewItemList ;
                 results.count = listViewItemList.size() ;
             } else {
                 ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>() ;
-
                 for (ListViewItem item : listViewItemList) {
                     if (item.getTitle().toUpperCase().contains(constraint.toString().toUpperCase()) ||
                             item.getDesc().toUpperCase().contains(constraint.toString().toUpperCase()))
                     {
-                        itemList.add(item) ;
+                        itemList.add(item);
                     }
                 }
 
@@ -149,4 +151,5 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
             }
         }
     }
+
 }

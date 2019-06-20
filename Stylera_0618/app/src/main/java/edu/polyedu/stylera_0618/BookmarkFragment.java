@@ -3,19 +3,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -101,7 +97,9 @@ public class BookmarkFragment extends Fragment {
 
                 for (int i = 0; i < results.length(); ++i) {
                     JSONObject temp = results.getJSONObject(i);
-                    adapter.addItem(ContextCompat.getDrawable(getContext(), R.drawable.ic_home_black_24dp), temp.get("itemname").toString(), temp.get("price").toString());
+                    int imagId = getResources().getIdentifier(temp.get("image").toString(),"drawable", getActivity().getPackageName());
+
+                    adapter.addItem(ContextCompat.getDrawable(getContext(), imagId), temp.get("itemname").toString(), temp.get("price").toString());
                 }
                 adapter.notifyDataSetChanged();
 
@@ -111,4 +109,5 @@ public class BookmarkFragment extends Fragment {
             }
         }
     }
+
 }
