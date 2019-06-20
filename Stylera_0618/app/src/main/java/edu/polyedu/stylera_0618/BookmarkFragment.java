@@ -15,11 +15,8 @@ import android.widget.ListView;
 public class BookmarkFragment extends Fragment {
 
     private ListView listview;
-    private BookmarkListViewAdapter adapter;
-    private int[] img = {R.drawable.ic_bookmark_black_24dp, R.drawable.ic_collections_black_24dp, R.drawable.ic_dashboard_black_24dp, R.drawable.ic_multiline_chart_black_24dp, R.drawable.ic_home_black_24dp,
-            R.drawable.ic_show_chart_black_24dp, R.drawable.ic_notifications_off_black_24dp};
-    private String[] Title = {"qwer","asdf","zxcv","asdf","zxcv","asdf","zxcv"};
-    private String[] Context = {"1234","2345","3456","2345","3456","2345","3456"};
+    private ListViewAdapter adapter;
+
 
     @Nullable
     @Override
@@ -27,18 +24,17 @@ public class BookmarkFragment extends Fragment {
         LinearLayout layout = (LinearLayout)inflater.inflate(R.layout.bookmark, container, false);
 
         //변수 초기화
-        adapter = new BookmarkListViewAdapter();
+        adapter = new ListViewAdapter();
         listview = (ListView)layout.findViewById(R.id.listview2);
 
         //어뎁터 할당
         listview.setAdapter(adapter);
 
 
-        //adapter를 통한 값 전달
-        for (int i = 0; i < img.length; i++) {
-            adapter.addVO(ContextCompat.getDrawable(getContext(), img[i]), Title[i], Context[i]);
-        }
-
+       //adapter를 통한 값 전달
+//        for (int i = 0; i < img.length; i++) {
+//            adapter.addVO(ContextCompat.getDrawable(getContext(), img[i]), Title[i], Context[i]);
+//        }
 
         return layout;
     }
