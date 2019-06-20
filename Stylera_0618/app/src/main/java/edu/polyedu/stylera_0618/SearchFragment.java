@@ -40,7 +40,6 @@ public class SearchFragment extends Fragment {
     public GettingItemPHP gPHP;
 
     public static List<String> imageName = new ArrayList<>();
-    public static int productId = 0;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -132,5 +131,7 @@ public class SearchFragment extends Fragment {
             }
         }
     }
+
+
 
 }

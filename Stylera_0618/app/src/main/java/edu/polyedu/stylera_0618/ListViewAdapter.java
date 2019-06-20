@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,8 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
     // 필터링된 결과 데이터를 저장하기 위한 ArrayList. 최초에는 전체 리스트 보유.
     private ArrayList<ListViewItem> filteredItemList = listViewItemList ;
     Filter listFilter ;
-
+    List<Integer> selectItem = new ArrayList<>();
+    int i = 0;
     // ListViewAdapter의 생성자
     public ListViewAdapter() {
     }
@@ -56,7 +58,7 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
         TextView descTextView = (TextView) convertView.findViewById(R.id.textView2) ;
 
         // Data Set(filteredItemList)에서 position에 위치한 데이터 참조 획득
-        ListViewItem listViewItem = filteredItemList.get(position);
+        final ListViewItem listViewItem = filteredItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         iconImageView.setImageDrawable(listViewItem.getIcon());
@@ -68,10 +70,16 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 try {
                     PHPbookmarkReq request = new PHPbookmarkReq("http://192.168.56.101/test/bookmark_insert.php");
-                    request.PhPtest(SearchFragment.imageName.get(pos), String.valueOf(filteredItemList.get(pos).getTitle()),String.valueOf(filteredItemList.get(pos).getDesc()));
+                    Log.d("aaaaaaaaaaaaaa", String.valueOf(selectItem.size()));
+                    Log.d("aaaaaaaaaaaaaa", SearchFragment.imageName.get(pos));
+                    Log.e("aaaaaaaaaaaaaa", selectItem.toString());
+                    if(selectItem.size()==0){
+                        request.PhPtest(SearchFragment.imageName.get(pos), String.valueOf(filteredItemList.get(pos).getTitle()),String.valueOf(filteredItemList.get(pos).getDesc()));
+                    }else{
+                        request.PhPtest(SearchFragment.imageName.get(selectItem.get(pos)-1), String.valueOf(filteredItemList.get(pos).getTitle()),String.valueOf(filteredItemList.get(pos).getDesc()));
+                    }
                     Toast.makeText(context, (filteredItemList.get(pos).getTitle()) + " 상품이 북마크에 등록되었습니다.", Toast.LENGTH_SHORT).show();
                 }catch (MalformedURLException e){
                     e.printStackTrace();
@@ -123,12 +131,16 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
                 results.count = listViewItemList.size() ;
             } else {
                 ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>() ;
+                i = 0;
+                selectItem.clear();
                 for (ListViewItem item : listViewItemList) {
                     if (item.getTitle().toUpperCase().contains(constraint.toString().toUpperCase()) ||
                             item.getDesc().toUpperCase().contains(constraint.toString().toUpperCase()))
                     {
                         itemList.add(item);
-                    }
+                        i++;
+                        selectItem.add(i);
+                    }  else i++;
                 }
 
                 results.values = itemList ;
