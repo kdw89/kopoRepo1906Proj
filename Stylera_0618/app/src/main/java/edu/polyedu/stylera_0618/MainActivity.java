@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.view.KeyEvent;
 import android.view.MenuItem;
-import android.widget.EditText;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -51,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_bookmark:
                     transaction.replace(R.id.frame_layout, bookmarkFragment).commitAllowingStateLoss();
+
                     return true;
                 case R.id.navigation_chart:
                     transaction.replace(R.id.frame_layout, chartFragment).commitAllowingStateLoss();

@@ -23,7 +23,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="제목텍스트"
-            android:textSize="20dp" />
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/context"
@@ -31,12 +31,14 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
     </LinearLayout>
-    <ImageView
+    <CheckBox
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:button="@drawable/alarm_check_box"
         android:src="@drawable/ic_notifications_black_24dp"/>
     <Button
+        android:id="@+id/bookmark_delete"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

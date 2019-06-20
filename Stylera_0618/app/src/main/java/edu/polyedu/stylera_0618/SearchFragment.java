@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -17,8 +18,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,8 +27,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SearchFragment extends Fragment {
 
@@ -37,12 +34,8 @@ public class SearchFragment extends Fragment {
     private ListViewAdapter adapter;
 
     String url = "http://192.168.23.110/test/item.php";
-    // 데이터를 보기위한 TextView
-    TextView textViewJudge;
     // PHP를 읽어올때 사용할 변수
     public GettingItemPHP gPHP;
-    boolean idCheck = false;
-    List<ListViewItem> itemList = new ArrayList<ListViewItem>();
 
     @Nullable
     @Override
@@ -128,7 +121,6 @@ public class SearchFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
                 Log.d("AAAAAAAAAAAAAAAAAAA", e.toString());
-                textViewJudge.setText("Error 발생 - 관리자에게 문의하세요.");
             }
         }
     }

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 
@@ -39,7 +40,7 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
     public View getView(int position, View convertView, ViewGroup parent) {
         final int pos = position;
         final Context context = parent.getContext();
-
+        NetworkUtil.setNetworkPolicy();
         // "listview_item" Layout을 inflate하여 convertView 참조 획득.
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -59,13 +60,18 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
         titleTextView.setText(listViewItem.getTitle());
         descTextView.setText(listViewItem.getDesc());
 
+
         //리스트뷰 클릭 이벤트
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Toast.makeText(context, (pos + 1) + "번째 리스트가 클릭되었습니다.", Toast.LENGTH_SHORT).show();
-
+                try {
+                    PHPbookmarkReq request = new PHPbookmarkReq("http://192.168.56.101/test/bookmark_insert.php");
+                    request.PhPtest(String.valueOf(filteredItemList.get(pos).getTitle()),String.valueOf(filteredItemList.get(pos).getDesc()));
+                    Toast.makeText(context, (filteredItemList.get(pos).getTitle()) + " 상품이 북마크에 등록되었습니다.", Toast.LENGTH_SHORT).show();
+                }catch (MalformedURLException e){
+                    e.printStackTrace();
+                }
             }
         });
 

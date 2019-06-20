@@ -15,4 +15,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="8"></ListView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lookup"
+        android:textSize="20dp"
+        android:text="북마크 보기"/>
 </LinearLayout>
