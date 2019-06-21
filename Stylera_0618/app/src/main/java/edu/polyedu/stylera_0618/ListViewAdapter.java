@@ -72,9 +72,6 @@ public class ListViewAdapter extends BaseAdapter implements Filterable {
             public void onClick(View view) {
                 try {
                     PHPbookmarkReq request = new PHPbookmarkReq("http://192.168.56.101/test/bookmark_insert.php");
-                    Log.d("aaaaaaaaaaaaaa", String.valueOf(selectItem.size()));
-                    Log.d("aaaaaaaaaaaaaa", SearchFragment.imageName.get(pos));
-                    Log.e("aaaaaaaaaaaaaa", selectItem.toString());
                     if(selectItem.size()==0){
                         request.PhPtest(SearchFragment.imageName.get(pos), String.valueOf(filteredItemList.get(pos).getTitle()),String.valueOf(filteredItemList.get(pos).getDesc()));
                     }else{

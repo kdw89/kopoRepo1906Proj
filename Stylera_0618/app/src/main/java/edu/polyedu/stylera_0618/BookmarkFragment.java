@@ -45,13 +45,6 @@ public class BookmarkFragment extends Fragment {
         gPHP = new GettingBookmarkPHP();
         gPHP.execute(url);
 
-        TextView lookup = (TextView)layout.findViewById(R.id.lookup);
-        lookup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                adapter.notifyDataSetChanged();
-            }
-        });
         return layout;
     }
 

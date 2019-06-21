@@ -117,14 +117,15 @@ public class LoginActivity extends Activity {
                 }
                 if(idCheck == true){
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    idEdit.setText("");
-                    passEdit.setText("");
-                    intent.putExtra("inputId", idStr);
-                    intent.putExtra("inputPassword", passStr);
+//                    idEdit.setText("");
+//                    passEdit.setText("");
+//                    intent.putExtra("inputId", idStr);
+//                    intent.putExtra("inputPassword", passStr);
                     idCheck = false;
                     Toast.makeText(getApplicationContext(), "로그인 성공",
                             Toast.LENGTH_SHORT).show();
                     startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "ID 또는 비밀번호를 확인하세요.",
                             Toast.LENGTH_SHORT).show();
